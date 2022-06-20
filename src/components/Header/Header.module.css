@@ -1,7 +1,13 @@
-.container {
-    width: 600px;
+.header {
+    width: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin: 0 auto;
+}
+
+.header-title { 
+    font-size: 30px;
+
 }
