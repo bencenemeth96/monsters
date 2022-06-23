@@ -4,12 +4,11 @@ import { useState } from "react";
 import styles from "./CreateMonster.module.css";
 
 const CreateMonster = ({ createNewMonster }) => {
-  const [element, setElement] = useState("water");
+  const [element, setElement] = useState("fire");
+
   const [attack, setAttack] = useState(1);
   const [defense, setDefense] = useState(1);
   const [name, setName] = useState("");
-
-  const monsterElement = elements;
 
   const setMonsterAttack = (value) => {
     setAttack(parseInt(value));
@@ -23,21 +22,39 @@ const CreateMonster = ({ createNewMonster }) => {
   };
 
   const setMonsterElement = (index) => {
-    setElement(monsterElement[index]);
+    if (index === "decrement") {
+      const nextIndex = elements.indexOf(element) - 1;
+
+      setElement(elements[nextIndex === -1 ? 3 : nextIndex]);
+    } else {
+      const nextIndex = elements.indexOf(element) + 1;
+      setElement(elements[nextIndex === 4 ? 0 : nextIndex]);
+    }
   };
 
   const createMonster = () => {
-    if (attack > 0 && defense > 0) {
-      const monster = { name, attack, defense, element };
+    if (name.length > 0) {
+      const id = Math.random() * 10;
+      const monster = { name, attack, defense, element, id };
       createNewMonster(monster);
+
+      setName("");
+      setDefense(1);
+      setAttack(1);
     }
   };
   return (
     <div className={styles.create}>
       <div className={styles.selector}>
-        <Img name="arrow-left" onClick={() => setMonsterElement(0)}></Img>
+        <Img
+          name="arrow-left"
+          onClick={() => setMonsterElement("decrement")}
+        ></Img>
         <Img name={element || "water"}></Img>
-        <Img name="arrow-right" onClick={() => setMonsterElement(1)}></Img>
+        <Img
+          name="arrow-right"
+          onClick={() => setMonsterElement("increment")}
+        ></Img>
       </div>
       <div>
         <div>name</div>
